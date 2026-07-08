@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.env
+data/runtime/
+experiments/*/
+!experiments/registry/.gitkeep
+*.db
+.DS_Store
+.streamlit/secrets.toml
