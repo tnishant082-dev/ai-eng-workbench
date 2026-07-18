@@ -1,0 +1,97 @@
+[
+  {
+    "id": "g1",
+    "question": "What is RAG and why use citations?",
+    "expected_doc_ids": [
+      "01_rag_basics",
+      "09_eval_citation"
+    ],
+    "top_k": 4,
+    "multi_query": true
+  },
+  {
+    "id": "g2",
+    "question": "How does TF-IDF help in a local RAG demo?",
+    "expected_doc_ids": [
+      "03_embeddings_tfidf"
+    ],
+    "top_k": 4,
+    "multi_query": true
+  },
+  {
+    "id": "g3",
+    "question": "What should an agent trace include for tool calls?",
+    "expected_doc_ids": [
+      "10_observability_traces",
+      "06_tool_calling"
+    ],
+    "top_k": 5,
+    "multi_query": true
+  },
+  {
+    "id": "g4",
+    "question": "How do faithfulness evals work at a basic level?",
+    "expected_doc_ids": [
+      "08_eval_faithfulness"
+    ],
+    "top_k": 4,
+    "multi_query": true
+  },
+  {
+    "id": "g5",
+    "question": "Do I need an OpenAI key to run the workbench?",
+    "expected_doc_ids": [
+      "26_faq_workbench",
+      "17_data_scope"
+    ],
+    "top_k": 4,
+    "multi_query": true
+  },
+  {
+    "id": "g6",
+    "question": "What is hybrid search combining BM25 and dense retrieval?",
+    "expected_doc_ids": [
+      "23_hybrid_search"
+    ],
+    "top_k": 4,
+    "multi_query": true
+  },
+  {
+    "id": "g7",
+    "question": "Describe common agent patterns and tool calling",
+    "expected_doc_ids": [
+      "07_agent_patterns",
+      "06_tool_calling"
+    ],
+    "top_k": 5,
+    "multi_query": true
+  },
+  {
+    "id": "g8",
+    "question": "Explain gateway routing across LLM providers",
+    "expected_doc_ids": [
+      "11_gateway_routing"
+    ],
+    "top_k": 4,
+    "multi_query": true
+  },
+  {
+    "id": "g9",
+    "question": "What chunking strategies are used for RAG corpora?",
+    "expected_doc_ids": [
+      "02_chunking_strategies"
+    ],
+    "top_k": 4,
+    "multi_query": true
+  },
+  {
+    "id": "g10",
+    "question": "How does prompt injection relate to security basics?",
+    "expected_doc_ids": [
+      "22_prompt_injection",
+      "20_security_basics"
+    ],
+    "top_k": 5,
+    "multi_query": true
+  }
+]

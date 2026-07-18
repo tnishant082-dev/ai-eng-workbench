@@ -1,0 +1,24 @@
+{
+  "updated_at": "2026-09-20T08:07:59.318235+00:00",
+  "edges": [
+    {
+      "from": "data/corpus/*.md",
+      "to": "CorpusIndex.chunks",
+      "transform": "chunk_text + hybrid BM25/TFIDF fit",
+      "params": {
+        "chunk_size": 500,
+        "chunk_overlap": 80
+      }
+    },
+    {
+      "from": "CorpusIndex.chunks",
+      "to": "RAG citations",
+      "transform": "hybrid retrieve \u2192 expand \u2192 rerank"
+    },
+    {
+      "from": "data/datasets/churn_demo.csv",
+      "to": "experiments/*/model.joblib",
+      "transform": "sklearn Pipeline train"
+    }
+  ]
+}

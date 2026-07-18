@@ -1,0 +1,43 @@
+{
+  "updated_at": "2026-09-20T08:07:59.318235+00:00",
+  "datasets": [
+    {
+      "id": "corpus_markdown",
+      "path": "/workspace/ai-eng-workbench/data/corpus",
+      "format": "markdown",
+      "docs": 30,
+      "chunks": 30,
+      "quality": {
+        "docs": 30,
+        "empty": [],
+        "short": [],
+        "ok": true,
+        "score": 1.0
+      },
+      "description": "Synthetic AI-engineering knowledge base for offline RAG demos"
+    },
+    {
+      "id": "churn_demo",
+      "path": "data/datasets/churn_demo.csv",
+      "format": "csv",
+      "rows": 200,
+      "quality": {
+        "rows": 200,
+        "missing_columns": [],
+        "null_fraction": {
+          "customer_id": 0.0,
+          "tenure_months": 0.0,
+          "monthly_charges": 0.0,
+          "total_charges": 0.0,
+          "support_tickets": 0.0,
+          "contract": 0.0,
+          "churn": 0.0
+        },
+        "duplicate_rows": 0,
+        "ok": true
+      },
+      "versions": "data/datasets/versions/",
+      "description": "Synthetic tabular churn set for demo-scale ML pipeline"
+    }
+  ]
+}

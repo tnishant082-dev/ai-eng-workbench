@@ -1,0 +1,10 @@
+{
+  "version": "v1",
+  "dataset": "churn_demo",
+  "path": "churn_demo.csv",
+  "rows": 200,
+  "features": ["tenure_months", "monthly_charges", "total_charges", "support_tickets", "contract"],
+  "target": "churn",
+  "note": "Synthetic demo-scale churn CSV for portfolio ML pipeline — not production data.",
+  "created": "2026-07-15"
+}
