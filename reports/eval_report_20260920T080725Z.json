@@ -1,0 +1,80 @@
+{
+  "summary": {
+    "total": 4,
+    "passed": 3,
+    "failed": 1,
+    "pass_rate": 0.75,
+    "avg_faithfulness": 0.8097,
+    "avg_relevance": 1.0,
+    "avg_citation_precision": 0.175,
+    "avg_citation_recall": 0.5,
+    "avg_context_precision": 1.0,
+    "avg_context_recall": 1.0,
+    "avg_judge_score": 0.8858,
+    "avg_latency_ms": 6.03,
+    "total_cost_usd": 0.0,
+    "wall_ms": 25.3
+  },
+  "cases": [
+    {
+      "id": "g1",
+      "passed": true,
+      "faithfulness": 0.7733,
+      "relevance": 1.0,
+      "context_precision": 1.0,
+      "context_recall": 1.0,
+      "citation_precision": 0.25,
+      "citation_recall": 0.5,
+      "judge_score": 0.864,
+      "judge": "heuristic_stub",
+      "latency_ms": 7.39,
+      "cost_usd": 0.0,
+      "answer_preview": "Based on the local corpus for: _What is RAG and why use citations?_\n\n- [01_rag_basics#0] Retrieval-Augmented Generation (RAG) grounds LLM answers in external documents. A typical pipeline: ingest \u2192 chunk \u2192 embed \u2192 retrieve top-k \u2192 prompt wi"
+    },
+    {
+      "id": "g2",
+      "passed": false,
+      "faithfulness": 0.8451,
+      "relevance": 1.0,
+      "context_precision": 1.0,
+      "context_recall": 1.0,
+      "citation_precision": 0.0,
+      "citation_recall": 0.0,
+      "judge_score": 0.9071,
+      "judge": "heuristic_stub",
+      "latency_ms": 5.95,
+      "cost_usd": 0.0,
+      "answer_preview": "Based on the local corpus for: _How does TF-IDF help in a local RAG demo?_\n\n- [18_latency_budgets#0] Track p50/p95 latency for retrieve, LLM, and end-to-end query paths. Mock LLM latency stubs keep evals comparable across machines. A local "
+    },
+    {
+      "id": "g3",
+      "passed": true,
+      "faithfulness": 0.8395,
+      "relevance": 1.0,
+      "context_precision": 1.0,
+      "context_recall": 1.0,
+      "citation_precision": 0.2,
+      "citation_recall": 0.5,
+      "judge_score": 0.9037,
+      "judge": "heuristic_stub",
+      "latency_ms": 5.57,
+      "cost_usd": 0.0,
+      "answer_preview": "Based on the local corpus for: _What should an agent trace include for tool calls?_\n\n- [06_tool_calling#0] A minimal agent loop: plan \u2192 call tool \u2192 observe \u2192 decide next step or final answer. Keep tool schemas small (name, description, JSON"
+    },
+    {
+      "id": "g4",
+      "passed": true,
+      "faithfulness": 0.7808,
+      "relevance": 1.0,
+      "context_precision": 1.0,
+      "context_recall": 1.0,
+      "citation_precision": 0.25,
+      "citation_recall": 1.0,
+      "judge_score": 0.8685,
+      "judge": "heuristic_stub",
+      "latency_ms": 5.21,
+      "cost_usd": 0.0,
+      "answer_preview": "Based on the local corpus for: _How do faithfulness evals work at a basic level?_\n\n- [26_faq_workbench#0] Q: Do I need an OpenAI key? A: No \u2014 mock mode is the default. Q: Where is the corpus? A: `data/corpus/` markdown files, ingested at st"
+    }
+  ]
+}
