@@ -1,0 +1,30 @@
+services:
+  api:
+    build: .
+    ports: ["8000:8000"]
+    environment:
+      AIWB_LLM_PROVIDER: mock
+      AIWB_API_KEY: dev-workbench-key
+      AIWB_DB_PATH: /app/data/runtime/workbench.db
+      AIWB_VECTOR_BACKEND: memory
+    volumes:
+      - ./data:/app/data
+      - ./prompts:/app/prompts
+      - ./experiments:/app/experiments
+      - ./reports:/app/reports
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health')"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+  ui:
+    build: .
+    ports: ["8501:8501"]
+    environment:
+      API_URL: http://api:8000
+      AIWB_API_KEY: dev-workbench-key
+    depends_on:
+      api:
+        condition: service_healthy
+    command: streamlit run ui/streamlit_app.py --server.address 0.0.0.0 --server.port 8501

@@ -1,0 +1,37 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  lint-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install ruff bandit
+      - name: Ruff check
+        run: ruff check app tests ui || true
+      - name: Ruff format check
+        run: ruff format --check app tests ui || true
+      - name: Bandit
+        run: bandit -r app -ll -q || true
+      - name: Pytest
+        env:
+          AIWB_LLM_PROVIDER: mock
+          AIWB_AUTH_DISABLED: "1"
+        run: pytest -q
+  optional-security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install bandit ruff && bandit -r app -ll && ruff check app

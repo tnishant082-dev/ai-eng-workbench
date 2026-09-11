@@ -1,0 +1,11 @@
+flowchart LR
+  Q[Query] --> X[Query expansion / multi-query]
+  X --> BM25[BM25 sparse]
+  X --> Dense[Dense encoder\nhashing proxy or ST]
+  BM25 --> RRF[Reciprocal Rank Fusion]
+  Dense --> VS[Vector store\nmemory/FAISS/Chroma]
+  VS --> RRF
+  RRF --> RR[Rerank\ncross-encoder or lexical]
+  RR --> CTX[Parent context assemble]
+  CTX --> LLM[Mock / cloud LLM]
+  LLM --> Out[Answer + citations + confidence]

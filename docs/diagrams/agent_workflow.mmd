@@ -1,0 +1,14 @@
+flowchart TD
+  Start([Task]) --> Plan[Planner]
+  Plan --> Approval{Human approval?}
+  Approval -->|pending| Wait[Return pending_approval]
+  Approval -->|approved / off| Research[Research + corpus_search]
+  Research --> Validate[Tool validation]
+  Validate --> Execute[Executor tools]
+  Execute --> Critic[Critic]
+  Critic --> Reflect{Reflect}
+  Reflect -->|improve| Research
+  Reflect -->|pass| Synth[LLM synthesize]
+  Synth --> End([Answer + traces])
+  Execute -.->|tool fail| Retry[Retry / recovery]
+  Retry --> Critic
