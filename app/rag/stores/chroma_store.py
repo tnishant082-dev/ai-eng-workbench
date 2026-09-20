@@ -56,5 +56,5 @@ class ChromaVectorStore:
     def count(self) -> int:
         try:
             return int(self._col.count())
-        except Exception:
+        except (TypeError, ValueError, AttributeError, RuntimeError, OSError):
             return self._count

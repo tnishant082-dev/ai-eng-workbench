@@ -44,7 +44,7 @@ class MockProvider:
 
         # Simple tool-call heuristic for agent loops
         if tools and "TOOL:" in user.upper():
-            m = re.search(r"TOOL:\s*(\w+)\((.*)\)", user, re.I | re.S)
+            m = re.search(r"TOOL:\s*(\w+)\((.*)\)", user, re.IGNORECASE | re.DOTALL)
             if m:
                 name = m.group(1)
                 tool_calls.append(ToolCall(name=name, arguments={"raw": m.group(2)}, id="mock-1"))

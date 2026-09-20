@@ -2,8 +2,9 @@
 from __future__ import annotations
 
 import os
+from collections.abc import Iterator
 from contextlib import contextmanager
-from typing import Any, Iterator
+from typing import Any
 
 
 class _NoopSpan:
@@ -29,7 +30,7 @@ def _otel_available():
         from opentelemetry import trace  # noqa: F401
 
         return True
-    except Exception:
+    except ImportError:
         return False
 
 
@@ -55,8 +56,8 @@ def start_span(name: str, attributes: dict[str, Any] | None = None) -> Iterator[
         for k, v in attrs.items():
             try:
                 span.set_attribute(k, v)
-            except Exception:
-                pass
+            except (TypeError, ValueError, AttributeError):
+                continue
         try:
             yield span
         finally:

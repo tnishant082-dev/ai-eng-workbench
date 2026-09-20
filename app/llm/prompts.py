@@ -15,7 +15,7 @@ def load_prompt(prompts_dir: Path, name: str) -> str:
     for line in path.read_text(encoding="utf-8").splitlines():
         if line.startswith("#") and not line.startswith("# "):
             continue
-        if line.startswith("# version:") or line.startswith("# name:"):
+        if line.startswith(("# version:", "# name:")):
             continue
         lines.append(line)
     return "\n".join(lines).strip()

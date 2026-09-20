@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import Annotated, Any
 
 from fastapi import APIRouter, Body, HTTPException, Query, Request
 
@@ -22,14 +22,13 @@ from app.api.schemas import (
 )
 from app.core.jobs import JobQueue
 from app.dataeng.etl import run_etl
-from app.dataeng.validate import validate_corpus_frames
-from app.evals.runner import run_evals
-from app.ml.pipeline import FEATURE_COLS, TARGET, check_drift, list_registry, predict, train_model
 from app.dataeng.quality import corpus_quality, tabular_quality
+from app.dataeng.validate import validate_corpus_frames
+from app.evals.runner import run_agent_evals, run_evals
+from app.ml.pipeline import FEATURE_COLS, TARGET, check_drift, list_registry, predict, train_model
 from app.observability.analytics import trace_analytics
-from app.observability.otel import configure_otel_console_exporter, start_span
+from app.observability.otel import configure_otel_console_exporter
 from app.rag.retrieval_metrics import evaluate_retrieval
-from app.evals.runner import run_agent_evals
 
 api_router = APIRouter(prefix="/api/v1")
 
@@ -214,7 +213,9 @@ def gateway_compare(body: CompareRequest, request: Request) -> dict[str, Any]:
 
 
 @api_router.post("/ml/train", tags=["ml"])
-def ml_train(request: Request, body: MLTrainRequest | None = Body(default=None)) -> dict[str, Any]:
+def ml_train(
+    request: Request, body: Annotated[MLTrainRequest | None, Body()] = None
+) -> dict[str, Any]:
     body = body or MLTrainRequest()
     st = _state(request)
     settings = st["settings"]
@@ -233,7 +234,7 @@ def ml_predict(body: MLPredictRequest, request: Request) -> dict[str, Any]:
     settings = _state(request)["settings"]
     try:
         return predict(settings.registry_dir, body.records, mode=getattr(body, "mode", "batch"))
-    except Exception as exc:  # noqa: BLE001
+    except Exception as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
 
 
@@ -244,7 +245,9 @@ def ml_registry(request: Request) -> dict[str, Any]:
 
 
 @api_router.post("/ml/drift")
-def ml_drift(request: Request, body: MLPredictRequest | None = Body(default=None)) -> dict[str, Any]:
+def ml_drift(
+    request: Request, body: Annotated[MLPredictRequest | None, Body()] = None
+) -> dict[str, Any]:
     settings = _state(request)["settings"]
     sample = body.records if body and body.records else None
     return check_drift(settings.dataset_path, sample)

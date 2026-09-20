@@ -66,8 +66,7 @@ class MultiAgentWorkflow:
         research_out = research(task, self.index, memory)
         events.append({"type": "role", "role": "research", "content": research_out.content})
         tools_used.append("corpus_search")
-        for hit in (research_out.data.get("result") or {}).get("hits") or []:
-            citations.append(hit)
+        citations.extend((research_out.data.get("result") or {}).get("hits") or [])
 
         # EXECUTE
         tools = pick_tools(task)

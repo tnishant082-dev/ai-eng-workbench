@@ -1,2 +1,3 @@
-from app.ml.pipeline import train_model, predict, check_drift, list_registry
-__all__ = ["train_model", "predict", "check_drift", "list_registry"]
+from app.ml.pipeline import check_drift, list_registry, predict, train_model
+
+__all__ = ["check_drift", "list_registry", "predict", "train_model"]

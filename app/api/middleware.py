@@ -46,7 +46,7 @@ class APIKeyAuthMiddleware(BaseHTTPMiddleware):
         self.enabled = enabled
         try:
             self.roles = json.loads(roles_json or "{}")
-        except Exception:
+        except (json.JSONDecodeError, TypeError, ValueError):
             self.roles = {}
         self.roles.setdefault(api_key, "admin")
 

@@ -211,7 +211,7 @@ class CorpusIndex:
         tokens = [_tokenize(t) for t in texts]
         try:
             encoder = get_dense_encoder(prefer=dense_prefer, corpus_texts=texts)
-        except Exception:
+        except (ImportError, OSError, RuntimeError, ValueError):
             encoder = HashingDenseEncoder()
         dense_vecs = encoder.encode(texts)
         dim = int(dense_vecs.shape[1])

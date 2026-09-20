@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import json
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
@@ -29,7 +29,7 @@ def run_etl(
         }
         for c in index.chunks
     ]
-    ts = datetime.now(timezone.utc).isoformat()
+    ts = datetime.now(UTC).isoformat()
     cq = corpus_quality(corpus_dir)
     tq = None
     if dataset_path and Path(dataset_path).exists():

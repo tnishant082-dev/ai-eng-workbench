@@ -4,8 +4,8 @@ import ast
 import operator
 import re
 from dataclasses import dataclass
-from datetime import datetime, timezone
-from typing import Any, Callable
+from datetime import UTC, datetime
+from typing import Any
 
 from app.rag.index import CorpusIndex
 
@@ -47,7 +47,7 @@ def calculator(expression: str) -> ToolResult:
 
 
 def get_time() -> ToolResult:
-    now = datetime.now(timezone.utc).isoformat()
+    now = datetime.now(UTC).isoformat()
     return ToolResult(True, f"utc_now={now}", {"utc": now})
 
 
@@ -72,7 +72,7 @@ def extract_math_expression(text: str) -> str | None:
     m = re.search(
         r"(?:calculat\w*|compute|eval)\s+([0-9\.+\-\*/\(\)\s%]+)",
         text,
-        re.I,
+        re.IGNORECASE,
     )
     if m:
         expr = re.sub(r"\s+", "", m.group(1)).rstrip('.,;:')
@@ -84,9 +84,10 @@ def extract_math_expression(text: str) -> str | None:
     best = None
     for c in candidates:
         expr = re.sub(r"\s+", " ", c).strip()
-        if re.search(r"[+\-*/]", expr) and re.search(r"\d", expr):
-            if best is None or len(expr) > len(best):
-                best = expr
+        if re.search(r"[+\-*/]", expr) and re.search(r"\d", expr) and (
+            best is None or len(expr) > len(best)
+        ):
+            best = expr
     if best:
         best = best.rstrip('.,;:')
     return best

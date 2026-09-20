@@ -1,8 +1,8 @@
-from pathlib import Path
 from __future__ import annotations
 
 import json
 import sys
+from pathlib import Path
 
 from app.core.config import get_settings
 from app.evals.runner import run_evals

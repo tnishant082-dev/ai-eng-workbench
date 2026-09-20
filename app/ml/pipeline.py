@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import json
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
@@ -14,6 +14,7 @@ from sklearn.metrics import accuracy_score, f1_score, roc_auc_score
 from sklearn.model_selection import GridSearchCV, train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
+
 from app.ml.tracking import get_experiment_store
 
 FEATURE_COLS = ["tenure_months", "monthly_charges", "total_charges", "support_tickets", "contract"]
@@ -77,8 +78,8 @@ def train_model(dataset_path: Path, experiments_dir: Path, registry_dir: Path, *
         "accuracy": round(float(accuracy_score(y_test, pred)), 4),
         "f1": round(float(f1_score(y_test, pred)), 4),
         "roc_auc": round(float(roc_auc_score(y_test, proba)), 4),
-        "n_train": int(len(X_train)),
-        "n_test": int(len(X_test)),
+        "n_train": len(X_train),
+        "n_test": len(X_test),
         "scale": "demo",
         "best_params": best_params,
         "tracking_backend": tracking_backend,
@@ -97,7 +98,7 @@ def train_model(dataset_path: Path, experiments_dir: Path, registry_dir: Path, *
         "model_path": str(model_path),
         "metrics": metrics,
         "features": FEATURE_COLS,
-        "created_at": datetime.now(timezone.utc).isoformat(),
+        "created_at": datetime.now(UTC).isoformat(),
         "note": "Demo-scale logistic regression on synthetic churn CSV — not a production model.",
     }
     (registry_dir / "current.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")

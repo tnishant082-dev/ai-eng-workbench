@@ -32,7 +32,7 @@ def tabular_quality(csv_path: Path, required_cols: list[str]) -> dict[str, Any]:
     null_frac = {c: round(float(df[c].isna().mean()), 4) for c in df.columns}
     dupes = int(df.duplicated().sum())
     return {
-        "rows": int(len(df)),
+        "rows": len(df),
         "missing_columns": missing,
         "null_fraction": null_frac,
         "duplicate_rows": dupes,

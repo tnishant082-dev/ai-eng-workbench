@@ -60,7 +60,7 @@ class OpenAICompatibleProvider:
                 r = client.post(url, headers=headers, json=payload)
                 r.raise_for_status()
                 data = r.json()
-        except Exception as exc:  # noqa: BLE001
+        except Exception as exc:
             if mock_builder is None:
                 raise
             fb = self._fallback.complete(

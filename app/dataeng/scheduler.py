@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 import argparse
-from typing import Callable
+from collections.abc import Callable
 
 
 def run_scheduled(job: Callable[[], None], seconds: int = 3600) -> str:
@@ -18,10 +18,10 @@ def run_scheduled(job: Callable[[], None], seconds: int = 3600) -> str:
         print(f"APScheduler running every {seconds}s — Ctrl+C to stop")
         sched.start()
         return "apscheduler"
-    except Exception:
+    except (ImportError, OSError, RuntimeError, ValueError):
         print(
             "APScheduler not installed. Run once now, and schedule via cron, e.g.:\n"
-            f"  */60 * * * *  cd /path/to/repo && python -m app.dataeng.scheduler --once\n"
+            "  */60 * * * *  cd /path/to/repo && python -m app.dataeng.scheduler --once\n"
         )
         job()
         return "cron_docs_once"

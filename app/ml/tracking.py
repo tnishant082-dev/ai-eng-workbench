@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 import json
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
@@ -18,7 +18,7 @@ class FilesystemExperimentStore:
         self._active: dict[str, Any] | None = None
 
     def start_run(self, run_name: str | None = None) -> str:
-        run_id = run_name or datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+        run_id = run_name or datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ")
         run_dir = self.root / run_id
         run_dir.mkdir(parents=True, exist_ok=True)
         self._active = {"run_id": run_id, "metrics": {}, "params": {}, "dir": run_dir}
@@ -49,7 +49,7 @@ class FilesystemExperimentStore:
             "params": self._active["params"],
             "metrics": self._active["metrics"],
             "backend": self.backend,
-            "ended_at": datetime.now(timezone.utc).isoformat(),
+            "ended_at": datetime.now(UTC).isoformat(),
         }
         self.log_artifact_json("run.json", meta)
         out = meta
@@ -97,6 +97,6 @@ def get_experiment_store(root: Path, prefer_mlflow: bool = True):
     if prefer_mlflow:
         try:
             return MLflowExperimentStore(), "mlflow"
-        except Exception:
-            pass
+        except (ImportError, OSError, RuntimeError, ValueError):
+            return FilesystemExperimentStore(root), "filesystem"
     return FilesystemExperimentStore(root), "filesystem"

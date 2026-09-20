@@ -4,7 +4,14 @@ from dataclasses import dataclass
 from typing import Any
 
 from app.agents.memory import ShortTermMemory
-from app.agents.tools import TOOL_SPECS, calculator, corpus_search, extract_math_expression, get_time, pick_tools
+from app.agents.tools import (
+    TOOL_SPECS,
+    calculator,
+    corpus_search,
+    extract_math_expression,
+    get_time,
+    pick_tools,
+)
 from app.rag.index import CorpusIndex
 
 
@@ -75,9 +82,10 @@ def critic(task: str, memory: ShortTermMemory) -> RoleOutput:
         hits = ((research_items[0].get("data") or {}).get("hits")) or []
         if len(hits) < 1:
             issues.append("weak retrieval")
-    if "calculat" in task.lower() or extract_math_expression(task):
-        if not any("calculator" in (i.get("content") or "") for i in exec_items):
-            issues.append("expected calculator result missing")
+    if ("calculat" in task.lower() or extract_math_expression(task)) and not any(
+        "calculator" in (i.get("content") or "") for i in exec_items
+    ):
+        issues.append("expected calculator result missing")
     verdict = "pass" if not issues else "revise"
     content = f"Critic verdict={verdict}; issues={issues or ['none']}"
     memory.add("critic", content, verdict=verdict, issues=issues)

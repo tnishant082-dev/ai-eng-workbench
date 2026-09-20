@@ -42,8 +42,7 @@ def multi_queries(query: str) -> list[str]:
     if re.match(r"(?i)what is|what are|how do|how does|why", q):
         variants.append(re.sub(r"(?i)^(what is|what are|how do|how does|why)\s+", "", q))
     # expand synonyms into one variant
-    for exp in expand_query(q)[1:2]:
-        variants.append(exp)
+    variants.extend(expand_query(q)[1:2])
     # dedupe preserving order
     seen = set()
     out = []

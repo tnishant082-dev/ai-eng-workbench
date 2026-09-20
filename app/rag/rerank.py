@@ -34,7 +34,7 @@ def lightweight_lexical_rerank(query: str, hits: list[Hit], top_k: int = 5) -> t
 def cross_encoder_rerank(query: str, hits: list[Hit], top_k: int = 5):
     try:
         from sentence_transformers import CrossEncoder
-    except Exception:
+    except ImportError:
         return None
     try:
         model = CrossEncoder("cross-encoder/ms-marco-MiniLM-L-6-v2")
@@ -45,7 +45,7 @@ def cross_encoder_rerank(query: str, hits: list[Hit], top_k: int = 5):
         for h, sc in ranked[:top_k]:
             out.append(Hit(chunk=h.chunk, score=round(float(sc), 4), bm25=h.bm25, tfidf=h.tfidf, dense=h.dense, rrf=h.rrf, rerank=float(sc)))
         return out, "cross_encoder"
-    except Exception:
+    except (ImportError, OSError, RuntimeError, ValueError):
         return None
 
 

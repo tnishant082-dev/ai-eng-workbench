@@ -1,7 +1,6 @@
 """Parent-child chunking for retrieval (child for search, parent for context)."""
 from __future__ import annotations
 
-import re
 from dataclasses import dataclass, field
 
 

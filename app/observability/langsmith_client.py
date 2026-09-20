@@ -4,7 +4,7 @@ from __future__ import annotations
 import json
 import os
 import uuid
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
@@ -25,7 +25,7 @@ class LocalLangSmithRecorder:
             "run_type": run_type,
             "inputs": inputs,
             "outputs": None,
-            "created_at": datetime.now(timezone.utc).isoformat(),
+            "created_at": datetime.now(UTC).isoformat(),
             "mode": self.mode,
         }
         (self.root / f"{run_id}.json").write_text(json.dumps(payload, indent=2), encoding="utf-8")
@@ -38,7 +38,7 @@ class LocalLangSmithRecorder:
         data = json.loads(path.read_text(encoding="utf-8"))
         data["outputs"] = outputs
         data["error"] = error
-        data["ended_at"] = datetime.now(timezone.utc).isoformat()
+        data["ended_at"] = datetime.now(UTC).isoformat()
         path.write_text(json.dumps(data, indent=2), encoding="utf-8")
 
     def list_runs(self, limit: int = 20) -> list[dict[str, Any]]:
@@ -61,7 +61,7 @@ class LangSmithClient:
                 import langsmith  # noqa: F401
 
                 self.mode = "langsmith_sdk_available"
-            except Exception:
+            except ImportError:
                 self.mode = "api_key_set_sdk_missing_local_fallback"
         else:
             self.mode = "local_stub"

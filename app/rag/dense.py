@@ -59,7 +59,7 @@ class TfidfDenseProxy:
         self._svd = TruncatedSVD(n_components=n_components, random_state=42)
         self._fitted = False
 
-    def fit(self, texts: list[str]) -> "TfidfDenseProxy":
+    def fit(self, texts: list[str]) -> TfidfDenseProxy:
         X = self._tfidf.fit_transform(texts)
         n = min(self.n_components, max(X.shape[1] - 1, 1), max(X.shape[0] - 1, 1))
         if n < self.n_components:
